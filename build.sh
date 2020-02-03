@@ -9,7 +9,12 @@ export LC_ALL=C
 # Generate toolchain-icestorm-arch-ver.tar.gz from source code
 # sources: http://www.clifford.at/icestorm/
 
-VERSION="${TRAVIS_TAG}"
+if [ -n "${TRAVIS_TAG}" ]; then
+    VERSION="${TRAVIS_TAG}"
+else
+    # We still want a version number, even if travis is not building us
+    VERSION=$(git describe --tags --dirty)
+fi
 
 # -- Target architectures
 ARCH=$1
